@@ -35,6 +35,11 @@ public abstract class Container
         }
         MasaLadunku += masa;
     }
+    public void PrintContainerInfo()
+    {
+        Console.WriteLine($"Kontener: {NumerSeryjny}, Zaladowano: {MasaLadunku} kg, Max masa ładunku: " +
+                          $"{MaxLadownosc} kg, Masa własna: {WagaWlasna} kg, Wysokość: {Wysokosc} cm, Głębokość: {Glebokosc} cm");
+    }
 }
 
 public interface IsHazardNotifier
@@ -48,30 +53,32 @@ class Program
         ContainerShip ship1 = new ContainerShip("s1", 50, 10, 100);
         ContainerShip ship2 = new ContainerShip("s2", 25, 12, 200);
 
-        Container c1 = new LiquidContainer(3, 1, 3, 50, false);
-        Container c2 = new GazContainer(100,5,1,5,60);
+        Container c1 = new LiquidContainer(3, 1, 3, 500, false);
+        Container c2 = new GazContainer(100,5,1,5,600);
         Container c3 = new RefrigeratedContainer(20, 1, 5, 5, "Bananas", 20);
         
-        c1.LoadContainer(6);
-        c2.LoadContainer(2);
-
-        ship1.AddContainer(c1);
-        ship2.AddContainer(c2);
+        c1.PrintContainerInfo();
+        c1.LoadContainer(25);
+        c1.PrintContainerInfo();
         
+        ship1.PrintShipInfo();
+        ship2.PrintShipInfo();
+        
+        c1.PrintContainerInfo();
+        c2.PrintContainerInfo();
+        c3.PrintContainerInfo();
+        
+        Console.WriteLine("Dodaj c1 do ship1");
+        ship1.AddContainer(c1);
+        ship1.PrintShipInfo();
+        
+        Console.WriteLine("Dodaj do ship2 liste kontenerów");
         List<Container> containers = new List<Container>();
+        containers.Add(c1);
         containers.Add(c2);
         containers.Add(c3);
-        containers.Add(c1);
         
-        ship1.PrintShipInfo();
-        ship1.ReplaceContainer(c1.NumerSeryjny, c2);
-        
-        ship1.MoveContainer(c2,ship2);
-        ship2.PrintContainerInfo(c1.NumerSeryjny);
-        
-        ship1.AddContainer(containers);
-        
-        ship1.PrintShipInfo();
+        ship2.AddContainer(containers);
         ship2.PrintShipInfo();
         
     }

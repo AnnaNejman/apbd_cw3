@@ -24,7 +24,7 @@ public class ContainerShip
             throw new Exception("Kontenerowiec jest juz pelny!");
         }
         
-        if (GetCurrentLoad()+container.MasaLadunku+container.WagaWlasna > MaxWeight)
+        if (GetCurrentLoad()+container.MasaLadunku+container.WagaWlasna > MaxWeight*1000)
         {
             throw new Exception("Masa kontenera jest zbyt duza zeby zaladowac go na ten kontenerowiec!");
         }
@@ -57,18 +57,10 @@ public class ContainerShip
         RemoveContainer(container.NumerSeryjny);
         newContainerShip.AddContainer(container);
     }
-    public void PrintContainerInfo(string serialNumber)
+    public void PrintContainerInfo(Container container)
     {
-        var container = Containers.Find(c => c.NumerSeryjny == serialNumber);
-        if (container != null)
-        {
-            Console.WriteLine($"Kontener: {container.NumerSeryjny}, Zaladowano: {container.MasaLadunku} kg, Max masa ładunku: " +
+        Console.WriteLine($"Kontener: {container.NumerSeryjny}, Zaladowano: {container.MasaLadunku} kg, Max masa ładunku: " +
                               $"{container.MaxLadownosc} kg, Masa własna: {container.WagaWlasna} kg, Wysokość: {container.Wysokosc} cm, Głębokość: {container.Glebokosc} cm");
-        }
-        else
-        {
-            Console.WriteLine("Nie znaleziono tego kontenera.");
-        }
     }
     public void PrintShipInfo()
     {
